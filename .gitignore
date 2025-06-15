@@ -4,7 +4,12 @@ venv/
 __pycache__/
 
 # Data and Models (to be tracked by DVC, not Git)
-data/
+# Ignore the data directory contents...
+/data/*
+
+# ...but UN-ignore the .dvc files and the .gitkeep files inside it!
+!/data/**/*.dvc
+!/data/**/.gitkeep
 models/
 
 # IDE files
