@@ -1,0 +1,13 @@
+# Python virtual environment
+.venv/
+venv/
+__pycache__/
+
+# Data and Models (to be tracked by DVC, not Git)
+data/
+models/
+
+# IDE files
+.vscode/
+.idea/
+
