@@ -1,0 +1,41 @@
+# A name for your workflow
+name: Python Code Quality Check
+
+# Controls when the workflow will run
+on:
+  push: # Run on every push to any branch
+    branches: [ main, task-1-eda, task-2-dvc, task-3-hypothesis-testing, task-4-modeling ]
+  pull_request: # Also run on pull requests to main
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  linting:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Step 1: Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up a Python environment
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Step 3: Install the project dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      # Step 4: Run the linter (flake8)
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
